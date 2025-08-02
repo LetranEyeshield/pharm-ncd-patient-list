@@ -68,21 +68,18 @@
 // }
 
 // app/api/patients/[id]/route.ts
+
 import { connectDB } from "@/app/lib/mongodb";
 import Patients from "@/app/models/Patient";
 import { NextRequest, NextResponse } from "next/server";
 
-// Type from Next.js for route context
-interface RouteContext {
-  params: {
-    id: string;
-  };
-}
-
-export async function PUT(req: NextRequest, context: RouteContext) {
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+): Promise<NextResponse> {
   try {
     await connectDB();
-    const id = context.params.id;
+    const id = params.id; // fixed
     const body = await req.json();
 
     const updated = await Patients.findByIdAndUpdate(id, body, { new: true });
@@ -100,7 +97,10 @@ export async function PUT(req: NextRequest, context: RouteContext) {
   }
 }
 
-export async function DELETE(req: NextRequest, context: RouteContext) {
+export async function DELETE(
+  req: NextRequest,
+  context: { params: { id: string } }
+) {
   try {
     await connectDB();
     const id = context.params.id;
