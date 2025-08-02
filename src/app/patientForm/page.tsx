@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { savePatient } from "../actions/patient";
 import Link from "next/link";
+import { savePatient } from "@/app/lib/api";
+import { useState } from "react";
 
 export const medicinesList: string[] = [
   "AMLODIPINE",
@@ -58,135 +58,159 @@ export const addressList: string[] = [
 ];
 
 export default function PatientForm() {
+  // const [form, setForm] = useState({
+  //   firstName: "",
+  //   middleName: "",
+  //   lastName: "",
+  //   birthday: "",
+  //   age: "",
+  //   address: "",
+  //   medicines: [],
+  // });
+
   const [form, setForm] = useState({
     firstName: "",
     middleName: "",
     lastName: "",
     birthday: "",
-    age: "",
+    age: 0,
     address: "",
-    medicines: [],
+    medicines: [] as string[],
   });
 
-  const handleSubmit = async (formData: FormData) => {
-    const result = await savePatient(formData);
-    if (result.success) {
-      alert("✅ Patient saved successfully!");
-    } else {
-      alert("❌ Failed to save patient.");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await savePatient(form);
+      if (res.success) {
+        alert(res.message); // or use toast if you're using shadcn/ui
+      } else {
+        alert(res.message);
+      }
+    } catch (err) {
+      alert("Error Saving Patient " + err);
     }
   };
 
-  function handleBirthdayChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const birthday = e.target.value;
-    const age = calculateAge(birthday);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
-      birthday,
-      age: age.toString(),
+      [name]: value,
     }));
-  }
 
-  function calculateAge(birthday: string): number {
-    const birthDate = new Date(birthday);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const hasBirthdayPassed =
-      today.getMonth() > birthDate.getMonth() ||
-      (today.getMonth() === birthDate.getMonth() &&
-        today.getDate() >= birthDate.getDate());
-
-    if (!hasBirthdayPassed) {
-      age--;
+    if (name === "birthday") {
+      const birthDate = new Date(value);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      setForm((prev) => ({ ...prev, age, birthday: value }));
     }
-    return age;
-  }
+  };
+
+  const handleMedicineChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    setForm((prev) => {
+      const newMedicines = checked
+        ? [...prev.medicines, value]
+        : prev.medicines.filter((m) => m !== value);
+      return { ...prev, medicines: newMedicines };
+    });
+  };
 
   return (
     <div className="p-4 max-w-md mx-auto border rounded shadow bg-green-200 mt-8">
-      <form action={handleSubmit} className="flex flex-col gap-4">
-        <h2 className="text-l md:text-3xl font-bold">ADD PATIENT RECORD</h2>
-
+      <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
         <input
+          type="text"
           name="firstName"
+          value={form.firstName}
+          onChange={handleChange}
           placeholder="First Name"
           required
-          className="w-full p-2 border rounded mt-2"
+          className="border p-2 w-full"
         />
+
         <input
+          type="text"
           name="middleName"
-          placeholder="Middle Name"
-          className="w-full p-2 border rounded mt-2"
+          value={form.middleName}
+          onChange={handleChange}
+          placeholder="Middle Name (optional)"
+          className="border p-2 w-full"
         />
+
         <input
+          type="text"
           name="lastName"
+          value={form.lastName}
+          onChange={handleChange}
           placeholder="Last Name"
           required
-          className="w-full p-2 border rounded mt-2"
+          className="border p-2 w-full"
         />
+
         <input
           type="date"
           name="birthday"
           value={form.birthday}
-          onChange={handleBirthdayChange}
+          onChange={handleChange}
+          required
+          className="border p-2 w-full"
         />
 
-        {/* <input
+        <input
           type="number"
           name="age"
           value={form.age}
           readOnly
-          className="bg-gray-100"
-        /> */}
-        <input
-          type="number"
-          value={form.age}
-          readOnly
-          className="bg-gray-100"
+          placeholder="Age"
+          className="border p-2 w-full bg-gray-100 cursor-not-allowed"
         />
-        <input type="hidden" name="age" value={form.age} />
-
-        {/* <input
-          name="address"
-          placeholder="Address"
-          required
-          className="w-full p-2 border rounded mt-2"
-        /> */}
 
         <select
           name="address"
           value={form.address}
-          onChange={(e) =>
-            setForm((prev) => ({ ...prev, address: e.target.value }))
-          }
-          className="w-full p-2 border rounded"
+          onChange={handleChange}
           required
+          className="border p-2 w-full"
         >
-          <option value="">-- Select Address --</option>
-          {addressList.map((add) => (
-            <option key={add} value={add}>
-              {add}
+          <option value="">Select Address</option>
+          {addressList.map((address) => (
+            <option key={address} value={address}>
+              {address}
             </option>
           ))}
         </select>
-
-        <fieldset className="w-full p-2 border rounded mt-2 bg-gray-100">
-          <legend className="font-semibold">Medicines</legend>
-          {medicinesList.map((med) => (
-            <label key={med} className="flex items-center gap-2 p-1">
-              <input type="checkbox" name="medicines" value={med} />
-              <span>{med}</span>
+        <div className="space-y-2">
+          <label className="font-semibold block">Medicines:</label>
+          {medicinesList.map((medicine) => (
+            <label key={medicine} className="block">
+              <input
+                type="checkbox"
+                value={medicine}
+                checked={form.medicines.includes(medicine)}
+                onChange={handleMedicineChange}
+                className="mr-2"
+              />
+              {medicine}
             </label>
           ))}
-        </fieldset>
+        </div>
 
         <button
           type="submit"
-          className="mt-2 px-4 py-2 bg-blue-500 text-xl text-white rounded hover:bg-blue-600"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          Add Patient
+          Save Patient
         </button>
       </form>
+
       <Link href={"/"}>Back</Link>
     </div>
   );

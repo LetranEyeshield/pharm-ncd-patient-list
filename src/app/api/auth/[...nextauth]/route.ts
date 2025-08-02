@@ -26,40 +26,14 @@ const handler = NextAuth({
 
         if (!isPasswordCorrect) return null;
 
-        return {
-          id: user._id.toString(),
-          name: user.username,
-          //email: user.email || "", // optional
-          //role: user.role || "user", // optional
-        };
+        return { id: user._id.toString(), name: user.username };
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      // On first login, attach user data to token
-      if (user) {
-        token.id = user.id;
-        token.name = user.name;
-        //token.email = user.email;
-        //token.role = user.role;
-      }
-      return token;
-    },
-    // async session({ session, token }) {
-    //   if (!session?.user) {
-    //     redirect("/login");
-    //   }
-    //   //session.user.id = token.id as string;
-    //   //session.user.role = token.role as string;
-    //   return session;
-    // },
     async session({ session, token }) {
-      if (session.user && token) {
-        session.user.id = token.id;
-        session.user.name = token.name;
-        // session.user.role = token.role;
-      }
+      // Add token values to session
+      session.user.id = token.id;
       return session;
     },
   },
@@ -67,7 +41,7 @@ const handler = NextAuth({
     strategy: "jwt",
   },
   pages: {
-    signIn: "/login", // your custom login page
+    signIn: "/login", // optional: your custom login page
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
