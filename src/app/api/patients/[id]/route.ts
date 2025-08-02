@@ -5,11 +5,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     await connectDB();
-    const id = params.id;
+    const id = context.params.id;
     const body = await req.json();
 
     const updated = await Patients.findByIdAndUpdate(id, body, { new: true });
@@ -29,11 +29,12 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     await connectDB();
-    const deleted = await Patients.findByIdAndDelete(params.id);
+    const id = context.params.id;
+    const deleted = await Patients.findByIdAndDelete(id);
     if (!deleted) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
     }
