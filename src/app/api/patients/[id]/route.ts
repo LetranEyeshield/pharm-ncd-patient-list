@@ -71,8 +71,17 @@ import { connectDB } from "@/app/lib/mongodb";
 import Patients from "@/app/models/Patient";
 import { NextRequest, NextResponse } from "next/server";
 
-// ✅ Do NOT destructure context in the parameter list
-export async function PUT(req: NextRequest, context: any) {
+// Define specific type instead of any
+interface ParamsContext {
+  params: {
+    id: string;
+  };
+}
+
+export async function PUT(
+  req: NextRequest,
+  context: ParamsContext
+): Promise<NextResponse> {
   try {
     await connectDB();
     const id = context.params.id;
@@ -86,6 +95,7 @@ export async function PUT(req: NextRequest, context: any) {
 
     return NextResponse.json(updated);
   } catch (error) {
+    console.error("PUT error:", error); // ✅ use error to avoid lint warning
     return NextResponse.json(
       { error: "Failed to update patient" },
       { status: 500 }
@@ -93,7 +103,10 @@ export async function PUT(req: NextRequest, context: any) {
   }
 }
 
-export async function DELETE(req: NextRequest, context: any) {
+export async function DELETE(
+  _req: NextRequest,
+  context: ParamsContext
+): Promise<NextResponse> {
   try {
     await connectDB();
     const id = context.params.id;
@@ -106,6 +119,7 @@ export async function DELETE(req: NextRequest, context: any) {
 
     return NextResponse.json({ message: "Patient deleted" });
   } catch (error) {
+    console.error("DELETE error:", error); // ✅ use error to avoid lint warning
     return NextResponse.json(
       { error: "Failed to delete patient" },
       { status: 500 }
