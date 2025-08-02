@@ -67,19 +67,15 @@
 //   }
 // }
 
-// app/api/patients/[id]/route.ts
-
 import { connectDB } from "@/app/lib/mongodb";
 import Patients from "@/app/models/Patient";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-): Promise<NextResponse> {
+// ✅ Do NOT destructure context in the parameter list
+export async function PUT(req: NextRequest, context: any) {
   try {
     await connectDB();
-    const id = params.id; // fixed
+    const id = context.params.id;
     const body = await req.json();
 
     const updated = await Patients.findByIdAndUpdate(id, body, { new: true });
@@ -97,19 +93,22 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
+export async function DELETE(req: NextRequest, context: any) {
   try {
     await connectDB();
     const id = context.params.id;
+
     const deleted = await Patients.findByIdAndDelete(id);
+
     if (!deleted) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
     }
+
     return NextResponse.json({ message: "Patient deleted" });
-  } catch (err) {
-    return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to delete patient" },
+      { status: 500 }
+    );
   }
 }
