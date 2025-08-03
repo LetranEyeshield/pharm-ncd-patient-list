@@ -87,9 +87,9 @@
 import { useEffect, useState, useMemo } from "react";
 import { getAllPatients, Patient, updatePatient } from "@/app/lib/api";
 import debounce from "lodash.debounce";
-import { addressList, medicinesList } from "../patientForm/page";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { addressList, medicinesList } from "../constants/lists";
 
 export default function PatientsPage() {
   const [patients, setPatients] = useState<Patient[]>([]);

@@ -3,59 +3,7 @@
 import Link from "next/link";
 import { savePatient } from "@/app/lib/api";
 import { useState } from "react";
-
-export const medicinesList: string[] = [
-  "AMLODIPINE",
-  "ASPIRIN",
-  "ATORVASTATIN",
-  "CAPTOPRIL",
-  "CARVEDILOL",
-  "CLONIDINE",
-  "CLOPIDOGREL",
-  "DIGOXIN",
-  "FELODIPINE",
-  "FUROSEMIDE",
-  "GLICLAZIDE",
-  "IRBESARTAN",
-  "LOSARTAN",
-  "LOSARTAN + HCTZ",
-  "METFORMIN",
-  "METHYLDOPA",
-  "METOPROLOL",
-  "ROSUVASTATIN",
-  "TRIMETAZIDINE",
-  "SIMVASTATIN",
-  "SPIRONOLACTONE",
-];
-
-export const addressList: string[] = [
-  "BABASIT",
-  "BAGUINAY",
-  "BARITAO",
-  "BISAL",
-  "BUCAO",
-  "CABANBANAN",
-  "CALAOCAN",
-  "INAMOTAN",
-  "LELEMAAN",
-  "LICSI",
-  "LIPIT NORTE",
-  "LIPIT SUR",
-  "MATULONG",
-  "MERMER",
-  "NALSIAN",
-  "ORAAN EAST",
-  "ORAAN WEST",
-  "PANTAL",
-  "PAO",
-  "PARIAN",
-  "POBLACION",
-  "PUGARO",
-  "SAN RAMON",
-  "SAPANG",
-  "STA. INES",
-  "TEBUEL",
-];
+import { addressList, medicinesList } from "../constants/lists";
 
 export default function PatientForm() {
   // const [form, setForm] = useState({
