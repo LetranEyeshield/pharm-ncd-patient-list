@@ -17,7 +17,6 @@ export default function Home() {
           </Link>
           <LogoutButton />
         </div>
-
         <PatientList />
       </main>
     </div>

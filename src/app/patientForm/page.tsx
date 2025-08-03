@@ -5,6 +5,7 @@ import { savePatient } from "@/app/lib/api";
 import { useState } from "react";
 import { addressList, medicinesList } from "../constants/lists";
 import Banner from "../components/Banner";
+import toast from "react-hot-toast";
 
 export default function PatientForm() {
   // const [form, setForm] = useState({
@@ -32,9 +33,27 @@ export default function PatientForm() {
     try {
       const res = await savePatient(form);
       if (res.success) {
-        alert(res.message); // or use toast if you're using shadcn/ui
+        //alert(res.message); // or use toast if you're using shadcn/ui
+        toast.success("Saving Patient Successful!", {
+          duration: 3000,
+          style: {
+            background: "lightgreen",
+            //color: "white", // white text
+            //fontFamily: "Arial, sans-serif",
+            fontSize: "21px",
+          },
+        });
       } else {
-        alert(res.message);
+        //alert(res.message);
+        toast("Error Saving Patient!", {
+          duration: 3000,
+          style: {
+            background: "red",
+            color: "white", // white text
+            //fontFamily: "Arial, sans-serif",
+            fontSize: "21px",
+          },
+        });
       }
     } catch (err) {
       alert("Error Saving Patient " + err);

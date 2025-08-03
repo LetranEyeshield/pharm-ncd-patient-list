@@ -33,7 +33,7 @@ export default function LoginPage() {
       });
     } else {
       //alert("Invalid credentials");
-      toast("Log In Successful!", {
+      toast("Invalid Credentials!", {
         duration: 3000,
         style: {
           background: "red",

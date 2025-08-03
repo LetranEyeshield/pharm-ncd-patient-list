@@ -79,3 +79,8 @@ export async function GET() {
     );
   }
 }
+
+// export async function getPatientCount(): Promise<number> {
+//   await connectDB();
+//   return await Patient.countDocuments();
+// }

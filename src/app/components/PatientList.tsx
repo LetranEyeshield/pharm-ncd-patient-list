@@ -90,6 +90,7 @@ import debounce from "lodash.debounce";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { addressList, medicinesList } from "../constants/lists";
+import Link from "next/link";
 
 export default function PatientsPage() {
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -256,13 +257,16 @@ export default function PatientsPage() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="text-2xl text-center">Loading...</p>;
 
   return (
     <div className="py-8 px-15 w-10/12 mx-auto rounded-lg bg-green-50">
       <h2 className="font-bold text-xl sm:text-3xl mx-auto text-center mb-8">
         PATIENT LIST
       </h2>
+      <h3 className="font-bold text-2xl text-right mb-4">
+        Total Patients: {filteredPatients.length}
+      </h3>
       <hr className="mb-8" />
       <input
         type="text"
