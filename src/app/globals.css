@@ -30,10 +30,27 @@ body {
     font-size: 2rem;
   }
 }
-
+@media (max-width: 895px) {
+  .pagination-div {
+    font-size: 0.6rem;
+  }
+  .pagination-div button {
+    padding: 5px;
+  }
+}
 @media (max-width: 605px) {
   h1 {
     font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .pagination-div {
+    flex-direction: column;
+    align-items: center;
+  }
+  .pagination-div button {
+    width: 30%;
   }
 }
 

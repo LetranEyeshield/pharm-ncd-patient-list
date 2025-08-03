@@ -103,7 +103,7 @@ export default function PatientsPage() {
 
   //for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const patientsPerPage = 10;
+  const patientsPerPage = 25;
   const indexOfLast = currentPage * patientsPerPage;
   const indexOfFirst = indexOfLast - patientsPerPage;
   const currentPatients = filteredPatients.slice(indexOfFirst, indexOfLast);
@@ -349,7 +349,7 @@ export default function PatientsPage() {
           ))
         )}
       </ul>
-      <div className="flex justify-center gap-2 mt-6">
+      <div className="pagination-div flex justify-center gap-2 mt-6">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
