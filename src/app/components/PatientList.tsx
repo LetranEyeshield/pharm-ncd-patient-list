@@ -99,6 +99,16 @@ export default function PatientsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [editForm, setEditForm] = useState<Partial<Patient>>({});
+  const [totalCount, setTotalCount] = useState(0);
+
+  //for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const patientsPerPage = 10;
+  const indexOfLast = currentPage * patientsPerPage;
+  const indexOfFirst = indexOfLast - patientsPerPage;
+  const currentPatients = filteredPatients.slice(indexOfFirst, indexOfLast);
+
+  const totalPages = Math.ceil(filteredPatients.length / patientsPerPage);
 
   useEffect(() => {
     getAllPatients()
@@ -111,6 +121,24 @@ export default function PatientsPage() {
       })
       .catch((err) => console.error("Fetch error:", err))
       .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filteredPatients]);
+
+  useEffect(() => {
+    async function fetchPatients() {
+      try {
+        const data = await getAllPatients();
+        setPatients(data);
+        setTotalCount(data.length); // Store the full count separately
+      } catch (error) {
+        toast.error("Failed to fetch patients");
+      }
+    }
+
+    fetchPatients();
   }, []);
 
   const handleSearch = useMemo(
@@ -264,9 +292,13 @@ export default function PatientsPage() {
       <h2 className="font-bold text-xl sm:text-3xl mx-auto text-center mb-8">
         PATIENT LIST
       </h2>
-      <h3 className="font-bold text-2xl text-right mb-4">
+      {/* <h3 className="font-bold text-2xl text-right mb-4">
         Total Patients: {filteredPatients.length}
+      </h3> */}
+      <h3 className="font-bold text-2xl text-right mb-4">
+        Total Patients: {totalCount}
       </h3>
+
       <hr className="mb-8" />
       <input
         type="text"
@@ -280,7 +312,8 @@ export default function PatientsPage() {
         {filteredPatients.length === 0 ? (
           <li className="text-gray-500">No matching patients found.</li>
         ) : (
-          filteredPatients.map((p) => (
+          // filteredPatients.map((p) => (
+          currentPatients.map((p) => (
             <li key={p._id} className="border p-3 rounded shadow">
               <p>
                 <strong>
@@ -316,6 +349,37 @@ export default function PatientsPage() {
           ))
         )}
       </ul>
+      <div className="flex justify-center gap-2 mt-6">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="cursor-pointer px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+        >
+          Prev
+        </button>
+
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrentPage(i + 1)}
+            className={`px-3 py-1 border rounded cursor-pointer ${
+              currentPage === i + 1 ? "bg-green-500 text-white" : "bg-white"
+            }`}
+          >
+            {i + 1}
+          </button>
+        ))}
+
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+          className="cursor-pointer px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
 
       {selectedPatient && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
