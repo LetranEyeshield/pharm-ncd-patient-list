@@ -25,11 +25,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Playwrite+HU:wght@100..400&display=swap"
+          rel="stylesheet"
+        ></link>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
         <Toaster position="top-center" />
+        <footer>
+          <p className="text-center py-6">
+            &copy; by RHU Pharma Team 2025. All Rights Reserved
+          </p>
+        </footer>
       </body>
     </html>
   );

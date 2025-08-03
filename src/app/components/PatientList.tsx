@@ -175,7 +175,16 @@ export default function PatientsPage() {
 
     try {
       const updated = await updatePatient(selectedPatient._id, editForm);
-      toast.success("Patient updated successfully!");
+      //toast.success("Patient updated successfully!");
+      toast.success("Patient updated successfully!", {
+        duration: 5000,
+        style: {
+          background: "lightgreen",
+          //color: "white", // white text
+          //fontFamily: "Arial, sans-serif",
+          fontSize: "21px",
+        },
+      });
       const updatedList = patients.map((p) =>
         p._id === updated._id ? updated : p
       );
@@ -183,7 +192,17 @@ export default function PatientsPage() {
       setFilteredPatients(updatedList);
       setSelectedPatient(null);
     } catch (error) {
-      toast.error("Failed to update patient.");
+      //toast.error("Failed to update patient.");
+      toast.error("Failed to update patient!", {
+        duration: 3000,
+        style: {
+          background: "red",
+          color: "white", // white text
+          //fontFamily: "Arial, sans-serif",
+          fontSize: "21px",
+        },
+      });
+
       console.error("Update error:", error);
     }
   };
@@ -194,18 +213,45 @@ export default function PatientsPage() {
     );
     if (!confirm) return;
 
-    const toastId = toast.loading("Deleting patient...");
+    //const toastId = toast.loading("Deleting patient...");
+    const toastId = toast.loading("Deleting patient...", {
+      style: {
+        background: "#f78b90ff",
+        //color: "white",
+        //fontFamily: "Arial, sans-serif",
+        fontSize: "21px",
+      },
+    });
 
     try {
       await axios.delete(`/api/patients/${id}`);
-      toast.success("Patient deleted successfully!", { id: toastId });
+      //toast.success("Patient deleted successfully!", { id: toastId });
+      toast.success("Patient deleted successfully!", {
+        id: toastId,
+        style: {
+          background: "lightgreen",
+          // color: "white",
+          // fontFamily: "Arial, sans-serif",
+          fontSize: "21px",
+        },
+      });
 
       // Refresh patient list
       const updated = await getAllPatients();
       setPatients(updated);
       setFilteredPatients(updated);
     } catch (err) {
-      toast.error("Failed to delete patient", { id: toastId });
+      //toast.error("Failed to delete patient", { id: toastId });
+      toast.error("Failed to delete patient!", {
+        id: toastId,
+        style: {
+          background: "#f78b90ff",
+          // color: "white",
+          // fontFamily: "Arial, sans-serif",
+          fontSize: "21px",
+        },
+      });
+
       console.error(err);
     }
   };
@@ -213,13 +259,17 @@ export default function PatientsPage() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="p-4">
+    <div className="py-8 px-15 w-10/12 mx-auto rounded-lg bg-green-50">
+      <h2 className="font-bold text-xl sm:text-3xl mx-auto text-center mb-8">
+        PATIENT LIST
+      </h2>
+      <hr className="mb-8" />
       <input
         type="text"
         placeholder="Search by name..."
         value={searchQuery}
         onChange={onSearchChange}
-        className="mb-4 px-4 py-2 border rounded w-full"
+        className="search-field mb-5 px-4 py-2 border rounded"
       />
 
       <ul className="space-y-3">
@@ -233,18 +283,27 @@ export default function PatientsPage() {
                   {p.firstName} {p.middleName} {p.lastName}
                 </strong>
               </p>
-              <p>Birthday: {new Date(p.birthday).toLocaleDateString()}</p>
-              <p>Age: {p.age}</p>
-              <p>Address: {p.address}</p>
-              <p>Medicines: {p.medicines.join(", ")}</p>
+              <p>
+                <strong>Birthday: </strong>
+                {new Date(p.birthday).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Age: </strong> {p.age}
+              </p>
+              <p>
+                <strong>Address: </strong> {p.address}
+              </p>
+              <p>
+                <strong>Medicines: </strong> {p.medicines.join(", ")}
+              </p>
               <button
-                className="mt-2 px-3 py-1 bg-yellow-500 text-white rounded"
+                className="mt-2 mr-4 px-3 py-1 bg-blue-500 hover:bg-blue-300 cursor-pointer text-white rounded"
                 onClick={() => handleEditClick(p)}
               >
                 Edit
               </button>
               <button
-                className="text-red-600 hover:underline"
+                className="mt-2 px-3 py-1 bg-red-500 hover:bg-red-300 cursor-pointer text-white rounded"
                 onClick={() => handleDelete(p._id)}
               >
                 Delete
@@ -260,7 +319,9 @@ export default function PatientsPage() {
             onSubmit={handleUpdateSubmit}
             className="bg-white p-6 rounded shadow-md space-y-4 w-full max-w-lg max-h-[90vh] overflow-y-auto"
           >
-            <h2 className="text-lg font-bold">Edit Patient</h2>
+            <h2 className="font-bold text-xl sm:text-3xl mx-auto text-center mb-8">
+              EDIT PATIENT
+            </h2>
 
             <input
               type="text"
@@ -300,6 +361,15 @@ export default function PatientsPage() {
               className="w-full border px-3 py-2 rounded"
               required
             />
+            <input
+              type="number"
+              name="age"
+              onChange={handleFormChange}
+              value={editForm.age}
+              placeholder="Age"
+              className="w-full border px-3 py-2 rounded"
+            />
+
             <select
               name="address"
               value={editForm.address || ""}
@@ -335,13 +405,13 @@ export default function PatientsPage() {
               <button
                 type="button"
                 onClick={() => setSelectedPatient(null)}
-                className="px-4 py-2 bg-gray-400 text-white rounded"
+                className="px-4 py-2 bg-gray-400 hover:bg-gray-600 cursor-pointer text-white rounded"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-400 cursor-pointer text-white rounded"
               >
                 Update
               </button>

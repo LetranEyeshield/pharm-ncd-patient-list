@@ -5,6 +5,61 @@ body {
   padding: 0;
   margin: 0;
 }
-.logout-btn {
-  width: 15%;
+
+.playwrite-hu {
+  font-family: "Playwrite HU", cursive;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.banner-img {
+  width: 90%;
+}
+
+@media (max-width: 1175px) {
+  h1 {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 605px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 490px) {
+  h1 {
+    font-size: 1.3rem;
+  }
+  .login-form {
+    width: 85%;
+  }
+}
+
+@media (max-width: 435px) {
+  .search-field {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 340px) {
+  h1 {
+    font-size: 1rem;
+  }
 }
