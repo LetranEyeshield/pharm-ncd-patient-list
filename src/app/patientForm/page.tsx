@@ -7,25 +7,25 @@ import { addressList, medicinesList } from "../constants/lists";
 import Banner from "../components/Banner";
 import toast from "react-hot-toast";
 
-export default function PatientForm() {
-  // const [form, setForm] = useState({
-  //   firstName: "",
-  //   middleName: "",
-  //   lastName: "",
-  //   birthday: "",
-  //   age: "",
-  //   address: "",
-  //   medicines: [],
-  // });
+type Patient = {
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  birthday: string;
+  age: number;
+  address: string;
+  medicines: string[];
+};
 
-  const [form, setForm] = useState({
+export default function PatientForm() {
+  const [form, setForm] = useState<Patient>({
     firstName: "",
     middleName: "",
     lastName: "",
     birthday: "",
     age: 0,
     address: "",
-    medicines: [] as string[],
+    medicines: [],
   });
 
   const handleSubmit = async (e: React.FormEvent) => {

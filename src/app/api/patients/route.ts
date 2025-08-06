@@ -71,6 +71,9 @@ export async function GET() {
   try {
     await connectDB();
     const allPatients = await Patient.find().sort({ firstName: 1 });
+    // const allPatients = await Patient.find({ age: 0 }).sort({
+    //   firstName: 1,
+    // });
     return NextResponse.json(allPatients);
   } catch (error) {
     return NextResponse.json(

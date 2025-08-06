@@ -90,7 +90,7 @@ import debounce from "lodash.debounce";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { addressList, medicinesList } from "../constants/lists";
-import Link from "next/link";
+//import Link from "next/link";
 
 export default function PatientsPage() {
   const [patients, setPatients] = useState<Patient[]>([]);

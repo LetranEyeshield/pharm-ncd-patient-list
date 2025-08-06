@@ -15,6 +15,12 @@ export default function Home() {
           >
             Add New Patient
           </Link>
+          <Link
+            href={"/reports"}
+            className="reports-btn bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 mr-8"
+          >
+            Reports
+          </Link>
           <LogoutButton />
         </div>
         <PatientList />
