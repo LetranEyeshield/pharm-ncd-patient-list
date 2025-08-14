@@ -184,7 +184,7 @@ export default function PatientForm() {
           </button>
           <Link
             href={"/"}
-            className="logout-btn bg-green-500 text-white px-4 py-3 rounded hover:bg-green-700 cursor-pointer"
+            className="bg-green-500 text-white px-4 py-3 rounded hover:bg-green-700 cursor-pointer"
           >
             Back
           </Link>

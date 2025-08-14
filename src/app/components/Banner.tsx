@@ -5,7 +5,8 @@ export default function Banner() {
         PHARM NCD PATIENT LIST
       </h1>
       <img
-        src="/images/pharm-banner.jpg"
+        // src="/images/pharm-banner.jpg"
+        src="/images/the-best-rhu-friends.jpg"
         alt="Pharm Banner"
         className="banner-img mx-auto"
       />

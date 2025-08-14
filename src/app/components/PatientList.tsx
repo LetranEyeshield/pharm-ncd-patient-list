@@ -107,7 +107,6 @@ export default function PatientsPage() {
   const indexOfLast = currentPage * patientsPerPage;
   const indexOfFirst = indexOfLast - patientsPerPage;
   const currentPatients = filteredPatients.slice(indexOfFirst, indexOfLast);
-
   const totalPages = Math.ceil(filteredPatients.length / patientsPerPage);
 
   useEffect(() => {
@@ -349,6 +348,7 @@ export default function PatientsPage() {
           ))
         )}
       </ul>
+      {/* pagination */}
       <div className="pagination-div flex justify-center gap-2 mt-6 flex-wrap">
         <button
           onClick={() => setCurrentPage(1)}

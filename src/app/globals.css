@@ -38,6 +38,11 @@ body {
     padding: 5px;
   }
 } */
+@media (max-width: 636px) {
+  .reports-ul {
+    margin-top: 20px;
+  }
+}
 @media (max-width: 605px) {
   h1 {
     font-size: 1.6rem;
@@ -54,6 +59,15 @@ body {
   }
 } */
 
+@media (max-width: 545px) {
+  .home-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  .home-buttons a {
+    margin: 0 auto 7px;
+  }
+}
 @media (max-width: 490px) {
   h1 {
     font-size: 1.3rem;
@@ -62,7 +76,14 @@ body {
     width: 85%;
   }
 }
-
+@media (max-width: 460px) {
+  .in-report-back-btn {
+    display: block;
+    text-align: center;
+    width: 80%;
+    margin: 10px auto 0;
+  }
+}
 @media (max-width: 435px) {
   .search-field {
     width: 100%;

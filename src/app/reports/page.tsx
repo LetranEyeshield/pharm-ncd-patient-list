@@ -189,12 +189,19 @@ export default function PatientsPage() {
         <button
           //onClick={handleExportExcel}
           onClick={() => exportPatientsToExcel(filteredPatients)}
-          className="px-4 py-2 ml-6 bg-blue-300 text-white rounded hover:bg-blue-600"
+          className="px-4 py-2 ml-6 bg-blue-300 text-white rounded hover:bg-blue-600 mr-4 cursor-pointer"
         >
           Export to Excel
         </button>
 
-        <ul className="space-y-3">
+        <Link
+          href={"/"}
+          className="in-report-back-btn bg-green-500 text-white px-4 py-3 rounded hover:bg-green-700 cursor-pointer"
+        >
+          Back
+        </Link>
+
+        <ul className="reports-ul space-y-3">
           {filteredPatients.length === 0 ? (
             <li className="text-gray-500">No matching patients found.</li>
           ) : (

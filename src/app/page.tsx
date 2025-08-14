@@ -21,6 +21,12 @@ export default function Home() {
           >
             Reports
           </Link>
+          <Link
+            href={"/cards"}
+            className="reports-btn bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 mr-8"
+          >
+            Meds Card
+          </Link>
           <LogoutButton />
         </div>
         <PatientList />
