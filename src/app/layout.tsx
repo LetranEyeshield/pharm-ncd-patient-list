@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "RHU-Manaoag NCD Patient List",
     description: "rhu-manaoag pharmacy",
     // url: "https://yourdomain.com",
-    url: "https://pharm-ncd-patient-list.vercel.app",
+    url: "https://next-pharm-ncd-patient-list.vercel.app",
     siteName: "Pharm NCD Patient List",
     images: [
       {

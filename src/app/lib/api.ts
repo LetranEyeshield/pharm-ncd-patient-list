@@ -18,6 +18,25 @@ export interface Patient {
   medicines: string[];
 }
 
+// export async function savePatient(patient: {
+//   firstName: string;
+//   middleName?: string;
+//   lastName: string;
+//   birthday: string;
+//   age: number;
+//   address: string;
+//   medicines: string[];
+// }) {
+//   try {
+//     const response = await axios.post("/api/patients", patient);
+//   } catch (error: any) {
+//     console.error(error.response?.data || error.message);
+//   }
+
+//   // const response = await axios.post("/api/patients", patient);
+//   // return response.data;
+// }
+
 export async function savePatient(patient: {
   firstName: string;
   middleName?: string;
@@ -27,8 +46,13 @@ export async function savePatient(patient: {
   address: string;
   medicines: string[];
 }) {
-  const response = await axios.post("/api/patients", patient);
-  return response.data;
+  try {
+    const response = await axios.post("/api/patients", patient);
+    return response.data; // ✅ return the backend response
+  } catch (error: any) {
+    console.error(error.response?.data || error.message);
+    throw error; // rethrow so frontend can handle it
+  }
 }
 
 export async function getAllPatients(): Promise<Patient[]> {

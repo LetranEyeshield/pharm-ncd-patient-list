@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { savePatient } from "@/app/lib/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addressList, medicinesList } from "../constants/lists";
 import Banner from "../components/Banner";
 import toast from "react-hot-toast";
@@ -58,6 +58,7 @@ export default function PatientForm() {
     } catch (err) {
       alert("Error Saving Patient " + err);
     }
+    console.log("Submitting patient:", form);
   };
 
   const handleChange = (
@@ -90,6 +91,11 @@ export default function PatientForm() {
       return { ...prev, medicines: newMedicines };
     });
   };
+
+  // useEffect(() => {
+  //   console.log("Medicines updated:", form.medicines);
+  //   alert("Medicines: " + form.medicines.join(", "));
+  // }, [form.medicines]);
 
   return (
     <div className="patient-form-div w-full pb-10">
@@ -167,6 +173,7 @@ export default function PatientForm() {
                 <input
                   type="checkbox"
                   value={medicine}
+                  name="medicines"
                   checked={form.medicines.includes(medicine)}
                   onChange={handleMedicineChange}
                   className="mr-2"
