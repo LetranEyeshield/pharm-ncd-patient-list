@@ -1,17 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
-import { medsCardList } from "@/app/constants/lists";
+import { vitsCardList } from "@/app/constants/lists";
 import Link from "next/link";
 import Banner from "../components/Banner";
 import toast from "react-hot-toast";
-import { deleteCard, updateCard } from "../lib/api";
-import { CardType } from "../models/Card";
+import { deleteVitamins, updateVitamins } from "../lib/api";
+import { VitaminsCardType } from "../models/Vitamins";
 
-export default function Cards() {
-  const [medsCard, setMedsCard] = useState("All");
-  const [results, setResults] = useState<CardType[]>([]);
-  const [editingCard, setEditingCard] = useState<CardType | null>(null);
-  const [editForm, setEditForm] = useState<Partial<CardType>>({
+export default function Vitamins() {
+  const [vitaminsCard, setVitaminsCard] = useState("All");
+  const [results, setResults] = useState<VitaminsCardType[]>([]);
+  const [editingCard, setEditingCard] = useState<VitaminsCardType | null>(null);
+  const [editForm, setEditForm] = useState<Partial<VitaminsCardType>>({
     cardName: "",
     cardDate: new Date(),
     initialStock: "",
@@ -51,7 +51,7 @@ export default function Cards() {
   // ✅ Load ALL results once on page load
   useEffect(() => {
     const fetchAll = async () => {
-      const res = await fetch(`/api/cards?medsCard=All`);
+      const res = await fetch(`/api/vitamins?vitaminsCard=All`);
       const data = await res.json();
       setResults(data);
     };
@@ -62,14 +62,14 @@ export default function Cards() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await fetch(
-      `/api/cards?medsCard=${encodeURIComponent(medsCard)}`
+      `/api/vitamins?vitaminsCard=${encodeURIComponent(vitaminsCard)}`
     );
     const data = await res.json();
     setResults(data);
     setCurrentPage(1); // reset to first page when searching
   };
 
-  const handleEdit = (card: CardType) => {
+  const handleEdit = (card: VitaminsCardType) => {
     setEditingCard(card);
     setEditForm({
       cardName: card.cardName,
@@ -100,7 +100,7 @@ export default function Cards() {
   const handleUpdate = async () => {
     if (!editingCard) return;
     try {
-      await updateCard(editingCard._id.toString(), editForm);
+      await updateVitamins(editingCard._id.toString(), editForm);
       toast.success("Updated Successfully!", {
         duration: 3000,
         style: {
@@ -133,7 +133,7 @@ export default function Cards() {
     );
     if (!confirm) return;
     try {
-      await deleteCard(id);
+      await deleteVitamins(id);
       toast.success("Deleted Successfully!", {
         duration: 3000,
         style: {
@@ -162,10 +162,10 @@ export default function Cards() {
       <Banner />
       <div className="flex w-full justify-center mt-10">
         <Link
-          href={"/medsCardForm"}
+          href={"/vitaminsForm"}
           className="bg-green-500 text-white px-4 py-3 rounded hover:bg-green-700 cursor-pointer"
         >
-          Add Meds Card Record
+          Add Vitamins Card Record
         </Link>
         <Link
           href={"/"}
@@ -178,12 +178,12 @@ export default function Cards() {
 
       <form onSubmit={handleSubmit} className="flex mb-10">
         <select
-          value={medsCard}
-          onChange={(e) => setMedsCard(e.target.value)}
+          value={vitaminsCard}
+          onChange={(e) => setVitaminsCard(e.target.value)}
           className="border rounded mr-4 ml-6"
         >
           <option value="All">All</option>
-          {medsCardList.sort().map((m) => (
+          {vitsCardList.sort().map((m) => (
             <option key={m} value={m}>
               {m}
             </option>
@@ -355,7 +355,7 @@ export default function Cards() {
               <option value="" disabled>
                 Select Card Name
               </option>
-              {medsCardList.map((m) => (
+              {vitsCardList.map((m) => (
                 <option key={m} value={m}>
                   {m}
                 </option>

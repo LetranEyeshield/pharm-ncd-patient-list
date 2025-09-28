@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/app/lib/mongodb";
-import { Card, CardType } from "@/app/models/Card";
+import { Vitaminscard, VitaminsCardType } from "@/app/models/Vitamins";
 import { FilterQuery } from "mongoose";
 
 export async function POST(req: NextRequest) {
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     }
 
     await connectDB();
-    const newCard = new Card({
+    const newCard = new Vitaminscard({
       cardName,
       cardDate,
       initialStock,
@@ -59,18 +59,17 @@ export async function GET(request: Request) {
   await connectDB();
 
   const { searchParams } = new URL(request.url);
-  const medsCard = searchParams.get("medsCard"); // from dropdown
+  const vitaminsCard = searchParams.get("maintenanceCard"); // from dropdown
 
-  const query: FilterQuery<CardType> = {};
+  const query: FilterQuery<VitaminsCardType> = {};
 
-  if (medsCard && medsCard !== "All") {
-    query.cardName = medsCard;
+  if (vitaminsCard && vitaminsCard !== "All") {
+    query.cardName = vitaminsCard;
   }
 
-  // const card = await Card.find(query).lean();
-
+  // const card = await Maintenancecard.find(query).lean();
   // ✅ Sort by cardName alphabetically (A → Z)
-  const card = await Card.find(query).sort({ cardName: 1 }).lean();
+  const card = await Vitaminscard.find(query).sort({ cardName: 1 }).lean();
 
   const formatted = card.map((c) => ({
     ...c,

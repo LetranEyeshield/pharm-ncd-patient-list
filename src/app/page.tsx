@@ -27,6 +27,18 @@ export default function Home() {
           >
             Meds Card
           </Link>
+          <Link
+            href={"/maintenance"}
+            className="reports-btn bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 mr-8"
+          >
+            Maintenance Card
+          </Link>
+          <Link
+            href={"/vitamins"}
+            className="reports-btn bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 mr-8"
+          >
+            Vitamins Card
+          </Link>
           <LogoutButton />
         </div>
         <PatientList />
