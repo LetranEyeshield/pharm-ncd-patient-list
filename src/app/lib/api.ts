@@ -48,9 +48,15 @@ export async function savePatient(patient: {
 }) {
   try {
     const response = await axios.post("/api/patients", patient);
-    return response.data; // ✅ return the backend response
-  } catch (error: any) {
-    console.error(error.response?.data || error.message);
+    return response.data as { success: boolean; message: string };
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data || error.message);
+    } else if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("An unknown error occurred");
+    }
     throw error; // rethrow so frontend can handle it
   }
 }
