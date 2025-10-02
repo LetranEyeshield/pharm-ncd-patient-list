@@ -59,7 +59,7 @@ export async function GET(request: Request) {
   await connectDB();
 
   const { searchParams } = new URL(request.url);
-  const vitaminsCard = searchParams.get("maintenanceCard"); // from dropdown
+  const vitaminsCard = searchParams.get("vitaminsCard"); // from dropdown
 
   const query: FilterQuery<VitaminsCardType> = {};
 

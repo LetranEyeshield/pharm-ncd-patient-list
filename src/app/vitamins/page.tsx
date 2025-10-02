@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { deleteVitamins, updateVitamins } from "../lib/api";
 import { VitaminsCardType } from "../models/Vitamins";
 
-export default function Vitamins() {
+export default function Cards() {
   const [vitaminsCard, setVitaminsCard] = useState("All");
   const [results, setResults] = useState<VitaminsCardType[]>([]);
   const [editingCard, setEditingCard] = useState<VitaminsCardType | null>(null);

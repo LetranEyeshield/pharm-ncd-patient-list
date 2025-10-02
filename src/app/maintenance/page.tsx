@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { deleteMaintenance, updateMaintenance } from "../lib/api";
 import { MaintenanceCardType } from "../models/Maintenance";
 
-export default function Maintenance() {
+export default function Cards() {
   const [maintenanceCard, setMaintenanceCard] = useState("All");
   const [results, setResults] = useState<MaintenanceCardType[]>([]);
   const [editingCard, setEditingCard] = useState<MaintenanceCardType | null>(
