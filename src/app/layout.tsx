@@ -14,16 +14,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pharm NCD Patient List",
-  description: "Simple CRUD Web App for RHU-Manaoag NCD Patient List.",
+  title: "RHU-Manaoag Pharmacy",
+  description: "Simple CRUD Web App for RHU-Manaoag Pharmacy.",
   keywords:
     "pharmacy, RHU, Rural Health Unit, Manaoag, patient, medicine, medicines",
   openGraph: {
-    title: "RHU-Manaoag NCD Patient List",
+    title: "RHU-Manaoag Pharmacy",
     description: "rhu-manaoag pharmacy",
     // url: "https://yourdomain.com",
     url: "https://next-pharm-ncd-patient-list.vercel.app",
-    siteName: "Pharm NCD Patient List",
+    siteName: "RHU-Manaoag Pharmacy",
     images: [
       {
         url: "/banner.jpg", // Make sure this is a real image path
