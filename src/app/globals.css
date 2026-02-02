@@ -19,7 +19,8 @@ body {
 }
 
 .banner-img {
-  width: 90%;
+  width: 25%;
+  margin-bottom: 100px;
 }
 
 @media (max-width: 1175px) {
@@ -43,6 +44,12 @@ body {
     padding: 5px;
   }
 } */
+ @media (max-width: 768px) {
+ .banner-img {
+  width: 35%;
+  margin-bottom: 70px;
+}
+}
 @media (max-width: 636px) {
   .reports-ul {
     margin-top: 20px;
