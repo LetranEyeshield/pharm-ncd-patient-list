@@ -1,15 +1,15 @@
 import axios from "axios";
 // import { connectDB } from "./mongodb";
 // import { connectDB } from "@/app/lib/mongodb";
-// import Patient from "../models/Patient";
-import Patient from "@/app/models/Patient";
+ //import Patient from "../models/Patient";
+//import Patient from "@/app/models/Patient";
 // import { NextResponse } from "next/server";
 import { CardType } from "@/app/models/Card";
 import { MaintenanceCardType } from "@/app/models/Maintenance";
 import { VitaminsCardType } from "@/app/models/Vitamins";
 
 //needed by getAllPatients(0)
-export interface Patient {
+export interface Patient{
   _id: string;
   firstName: string;
   middleName?: string;

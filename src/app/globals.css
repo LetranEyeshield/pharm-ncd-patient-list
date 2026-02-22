@@ -6,6 +6,12 @@ body {
   margin: 0;
 }
 
+.container{
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
 .playwrite-hu {
   font-family: "Playwrite HU", cursive;
   font-optical-sizing: auto;

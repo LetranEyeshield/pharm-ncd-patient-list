@@ -8,3 +8,4 @@ export type PatientType = {
   address: string;
   medicines: string[];
 };
+
